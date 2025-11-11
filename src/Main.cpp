@@ -2,7 +2,7 @@
 
 void main()
 {
-	InitWindow(1280, 720, "Ejemplo");
+	InitWindow(1024, 768, "Ejemplo");
 	while (!WindowShouldClose())
 	{	
 		BeginDrawing();
