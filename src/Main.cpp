@@ -1,13 +1,6 @@
-#include <raylib.h>
+#include "program.h"
 
 void main()
 {
-	InitWindow(1024, 768, "Ejemplo");
-	while (!WindowShouldClose())
-	{	
-		BeginDrawing();
-		ClearBackground(BLACK);
-		EndDrawing();
-	}
-	CloseWindow();
+	program::run();
 }
