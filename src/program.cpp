@@ -77,9 +77,9 @@ namespace program
 				decahedron.move({ 0,0,1 }, delta);
 			if (IsKeyDown(KEY_D))
 				decahedron.move({ 1,0,0 }, delta);
-			if (IsKeyDown(KEY_SPACE))
+			if (IsKeyDown(KEY_E))
 				decahedron.move({ 0,1,0 }, delta);
-			if (IsKeyDown(KEY_LEFT_CONTROL))
+			if (IsKeyDown(KEY_Q))
 				decahedron.move({ 0,-1,0}, delta);
 
 			if (IsKeyDown(KEY_I))
