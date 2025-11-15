@@ -13,7 +13,8 @@ namespace program
 	Camera3D camera;
 	Vector3 cubePosition = { 0, 0, 0 };
 
-	Figure decahedron;
+	Figure cube;
+	Figure dodecahedron;
 
 	bool cursorMode;
 
@@ -40,7 +41,8 @@ namespace program
 		camera.fovy = 45.0f;
 		camera.projection = CAMERA_PERSPECTIVE;
 
-		decahedron = Figure(LoadModel("resource/cube.obj"));
+		cube = Figure(LoadModel("resource/cube.obj"));
+		dodecahedron = Figure(LoadModel("resource/dodecahedron.obj"));
 
 		DisableCursor();
 		cursorMode = false;
@@ -57,66 +59,66 @@ namespace program
 			if (IsKeyDown(KEY_W))
 			{
 				if (IsKeyDown(KEY_LEFT_SHIFT))
-					decahedron.rotate({ -1,0,0 }, delta);
+					cube.rotate({ -1,0,0 }, delta);
 				else
-					decahedron.move({ 0,0,-1 }, delta);
+					cube.move({ 0,0,-1 }, delta);
 			}
 			if (IsKeyDown(KEY_A))
 			{
 				if (IsKeyDown(KEY_LEFT_SHIFT))
-					decahedron.rotate({ 0,0,1 }, delta);
+					cube.rotate({ 0,0,1 }, delta);
 				else
-					decahedron.move({ -1,0,0 }, delta);
+					cube.move({ -1,0,0 }, delta);
 			}
 			if (IsKeyDown(KEY_S))
 			{
 				if (IsKeyDown(KEY_LEFT_SHIFT))
-					decahedron.rotate({ 1,0,0 }, delta);
+					cube.rotate({ 1,0,0 }, delta);
 				else
-					decahedron.move({ 0,0,1 }, delta);
+					cube.move({ 0,0,1 }, delta);
 			}
 			if (IsKeyDown(KEY_D))
 			{
 				if (IsKeyDown(KEY_LEFT_SHIFT))
-					decahedron.rotate({ 0,0,-1 }, delta);
+					cube.rotate({ 0,0,-1 }, delta);
 				else
-					decahedron.move({ 1,0,0 }, delta);
+					cube.move({ 1,0,0 }, delta);
 			}
 			if (IsKeyDown(KEY_E))
 			{
 				if (IsKeyDown(KEY_LEFT_SHIFT))
-					decahedron.rotate({ 0,1,0 }, delta);
+					cube.rotate({ 0,1,0 }, delta);
 				else
-					decahedron.move({ 0,1,0 }, delta);
+					cube.move({ 0,1,0 }, delta);
 			}
 			if (IsKeyDown(KEY_Q))
 			{
 				if (IsKeyDown(KEY_LEFT_SHIFT))
-					decahedron.rotate({ 0,-1,0 }, delta);
+					cube.rotate({ 0,-1,0 }, delta);
 				else
-					decahedron.move({ 0,-1,0}, delta);
+					cube.move({ 0,-1,0}, delta);
 			}
 
 			if (IsKeyDown(KEY_ONE))
 			{
 				if (IsKeyDown(KEY_LEFT_SHIFT))
-					decahedron.scale({ -1,0,0 }, delta);
+					cube.scale({ -1,0,0 }, delta);
 				else
-					decahedron.scale({ 1,0,0 }, delta);
+					cube.scale({ 1,0,0 }, delta);
 			}
 			if (IsKeyDown(KEY_TWO))
 			{
 				if (IsKeyDown(KEY_LEFT_SHIFT))
-					decahedron.scale({ 0,-1,0 }, delta);
+					cube.scale({ 0,-1,0 }, delta);
 				else
-					decahedron.scale({ 0,1,0 }, delta);
+					cube.scale({ 0,1,0 }, delta);
 			}
 			if (IsKeyDown(KEY_THREE))
 			{
 				if (IsKeyDown(KEY_LEFT_SHIFT))
-					decahedron.scale({ 0,0,-1 }, delta);
+					cube.scale({ 0,0,-1 }, delta);
 				else
-					decahedron.scale({ 0,0,1 }, delta);
+					cube.scale({ 0,0,1 }, delta);
 			}
 		}
 
@@ -134,6 +136,7 @@ namespace program
 			}
 		}
 
+
 	}
 
 	static void draw()
@@ -144,10 +147,14 @@ namespace program
 		
 		BeginMode3D(camera);
 
-		decahedron.render();
+		cube.render();
+		dodecahedron.render();
 		DrawGrid(10, 1);
 
 		EndMode3D();
+
+		if (cube.isColliding(dodecahedron))
+			DrawText("AABB Collision", 20, 50, 20, ORANGE);
 		
 		EndDrawing();
 	}

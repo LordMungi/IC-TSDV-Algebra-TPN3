@@ -27,5 +27,7 @@ public:
 	void rotate(Vector3 angle, float delta);
 	void scale(Vector3 axis, float delta);
 
+	inline bool isColliding(Figure other) { return aabb.isColliding(other.aabb); };
+
 	void render();
 };
