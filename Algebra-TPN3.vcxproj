@@ -19,10 +19,14 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\figure.cpp" />
     <ClCompile Include="src\main.cpp" />
+    <ClCompile Include="src\aabb.cpp" />
     <ClCompile Include="src\program.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\figure.h" />
+    <ClInclude Include="src\aabb.h" />
     <ClInclude Include="src\program.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">

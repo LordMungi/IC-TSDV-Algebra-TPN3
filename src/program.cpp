@@ -1,5 +1,7 @@
 #include "program.h"
-#include <raylib.h>
+
+#include "figure.h"
+
 
 namespace program
 {
@@ -10,6 +12,8 @@ namespace program
 
 	Camera3D camera;
 	Vector3 cubePosition = { 0, 0, 0 };
+
+	Figure decahedron;
 
 	bool cursorMode;
 
@@ -36,12 +40,16 @@ namespace program
 		camera.fovy = 45.0f;
 		camera.projection = CAMERA_PERSPECTIVE;
 
+		decahedron = Figure(LoadModel("resource/cube.obj"));
+
 		DisableCursor();
 		cursorMode = false;
 	}
 
 	static void update()
 	{
+		float delta = GetFrameTime();
+
 		if (!cursorMode)
 			UpdateCamera(&camera, CAMERA_FREE);
 
@@ -58,6 +66,35 @@ namespace program
 				cursorMode = true;
 			}
 		}
+
+		if (cursorMode)
+		{
+			if (IsKeyDown(KEY_W))
+				decahedron.move({ 0,0,-1 }, delta);
+			if (IsKeyDown(KEY_A))
+				decahedron.move({ -1,0,0 }, delta);
+			if (IsKeyDown(KEY_S))
+				decahedron.move({ 0,0,1 }, delta);
+			if (IsKeyDown(KEY_D))
+				decahedron.move({ 1,0,0 }, delta);
+			if (IsKeyDown(KEY_SPACE))
+				decahedron.move({ 0,1,0 }, delta);
+			if (IsKeyDown(KEY_LEFT_CONTROL))
+				decahedron.move({ 0,-1,0}, delta);
+
+			if (IsKeyDown(KEY_I))
+				decahedron.rotate({ -1,0,0 }, delta);
+			if (IsKeyDown(KEY_J))
+				decahedron.rotate({ 0,0,1 }, delta);
+			if (IsKeyDown(KEY_K))
+				decahedron.rotate({ 1,0,0 }, delta);
+			if (IsKeyDown(KEY_L))
+				decahedron.rotate({ 0,0,-1 }, delta);
+			if (IsKeyDown(KEY_U))
+				decahedron.rotate({ 0,1,0 }, delta);
+			if (IsKeyDown(KEY_O))
+				decahedron.rotate({ 0,-1,0 }, delta);
+		}
 	}
 
 	static void draw()
@@ -68,8 +105,7 @@ namespace program
 		
 		BeginMode3D(camera);
 
-		DrawCube(cubePosition, 2, 2, 2, RED);
-		DrawCubeWires(cubePosition, 2, 2, 2, MAROON);
+		decahedron.render();
 		DrawGrid(10, 1);
 
 		EndMode3D();
