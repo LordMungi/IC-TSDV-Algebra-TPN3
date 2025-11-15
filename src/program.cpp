@@ -150,6 +150,17 @@ namespace program
 			}
 		}
 
+		for (int i = 0; i < maxFigures; i++)
+		{
+			for (int j = i + 1; j < maxFigures; j++)
+			{
+				if (figures[i].isColliding(figures[j]))
+				{
+					aabbCollision = true;
+				}
+			}
+		}
+
 	}
 
 	static void draw()

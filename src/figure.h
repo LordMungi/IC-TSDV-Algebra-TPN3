@@ -30,5 +30,7 @@ public:
 	inline bool isColliding(Figure other) { return aabb.isColliding(other.aabb); };
 	bool isPointInside(Vector3 point);
 
+	inline Vector3 getAABBMin() { return aabb.getMin(); };
+
 	void render();
 };

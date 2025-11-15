@@ -21,5 +21,7 @@ public:
 
 	bool isColliding(AABB other);
 
+	inline Vector3 getMin() { return min; };
+
 	void render();
 };
