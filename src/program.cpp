@@ -50,12 +50,12 @@ namespace program
 		camera.fovy = 45.0f;
 		camera.projection = CAMERA_PERSPECTIVE;
 		
-		figures[0] = Figure(LoadModel("resource/cube.obj"), { 0, 0, 0});
-		figures[1] = Figure(LoadModel("resource/decahedron.obj"), { 2, -1, 2 });
-		figures[2] = Figure(LoadModel("resource/dodecahedron.obj"), { -2, 0, 2 });
-		figures[3] = Figure(LoadModel("resource/icosahedron.obj"), { 2, 0, -2 });
-		figures[4] = Figure(LoadModel("resource/octahedron.obj"), { -2, 0, -2 });
-		figures[5] = Figure(LoadModel("resource/tetrahedron.obj"), { 0, 2, 0 });
+		figures[0] = Figure(LoadModel("resource/cube.obj"), { 0, 0, 0}, RED);
+		figures[1] = Figure(LoadModel("resource/decahedron.obj"), { 2, -1, 2 }, BLUE);
+		figures[2] = Figure(LoadModel("resource/dodecahedron.obj"), { -2, 0, 2 }, GREEN);
+		figures[3] = Figure(LoadModel("resource/icosahedron.obj"), { 2, 0, -2 }, YELLOW);
+		figures[4] = Figure(LoadModel("resource/octahedron.obj"), { -2, 0, -2 }, MAGENTA);
+		figures[5] = Figure(LoadModel("resource/tetrahedron.obj"), { 0, 2, 0 }, BLACK);
 
 		selectedFigure = &figures[0];
 

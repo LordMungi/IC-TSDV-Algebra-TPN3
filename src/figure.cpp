@@ -5,6 +5,7 @@ Figure::Figure()
 	position = { 0,0,0 };
 	rotation = { 0,0,0 };
 	size = { 1,1,1 };
+	color = RED;
 }
 
 Figure::Figure(Model model)
@@ -14,19 +15,21 @@ Figure::Figure(Model model)
 	position = { 0,0,0 };
 	rotation = { 0,0,0 };
 	size = { 1,1,1 };
+	color = RED;
 
 	getLocalCenter();
 	aabb.setAABB(model.meshes[0]);
 	aabb.update(model.transform);
 }
 
-Figure::Figure(Model model, Vector3 position)
+Figure::Figure(Model model, Vector3 position, Color color)
 {
 	this->model = model;
 
 	this->position = position;
 	rotation = { 0,0,0 };
 	size = { 1,1,1 };
+	this->color = color;
 
 	getLocalCenter();
 	aabb.setAABB(model.meshes[0]);
@@ -143,6 +146,6 @@ bool Figure::isPointInside(Vector3 point)
 
 void Figure::render()
 {
-	DrawModel(model, { 0,0,0 }, 1.0f, RED);
+	DrawModel(model, { 0,0,0 }, 1.0f, color);
 	aabb.render();
 }

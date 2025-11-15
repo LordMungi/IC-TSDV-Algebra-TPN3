@@ -14,6 +14,8 @@ private:
 
 	Vector3 center;
 
+	Color color;
+
 	void applyTransform();
 	void getLocalCenter();
 
@@ -21,7 +23,7 @@ public:
 
 	Figure();
 	Figure(Model model);
-	Figure(Model model, Vector3 position);
+	Figure(Model model, Vector3 position, Color color);
 
 	void move(Vector3 direction, float delta);
 	void rotate(Vector3 angle, float delta);
