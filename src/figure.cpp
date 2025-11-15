@@ -96,6 +96,47 @@ void Figure::scale(Vector3 axis, float delta)
 	applyTransform();
 }
 
+bool Figure::isPointInside(Vector3 point)
+{
+	Mesh* mesh = &model.meshes[0];
+	for (int i = 0; i < mesh->triangleCount; i++)
+	{
+		Vector3 v1 = { 0,0,0 };
+		Vector3 v2 = { 0,0,0 };
+		Vector3 v3 = { 0,0,0 };
+
+		if (mesh->indices)
+		{
+			v1 = { mesh->vertices[mesh->indices[i * 3 + 0] * 3 + 0], mesh->vertices[mesh->indices[i * 3 + 0] * 3 + 1] , mesh->vertices[mesh->indices[i * 3 + 0] * 3 + 2] };
+			v2 = { mesh->vertices[mesh->indices[i * 3 + 1] * 3 + 0], mesh->vertices[mesh->indices[i * 3 + 1] * 3 + 1] , mesh->vertices[mesh->indices[i * 3 + 1] * 3 + 2] };
+			v3 = { mesh->vertices[mesh->indices[i * 3 + 2] * 3 + 0], mesh->vertices[mesh->indices[i * 3 + 2] * 3 + 1] , mesh->vertices[mesh->indices[i * 3 + 2] * 3 + 2] };
+		}
+		else
+		{
+			v1 = { mesh->vertices[(i * 3 + 0) * 3 + 0], mesh->vertices[(i * 3 + 0) * 3 + 1], mesh->vertices[(i * 3 + 0) * 3 + 2] };
+			v2 = { mesh->vertices[(i * 3 + 1) * 3 + 0], mesh->vertices[(i * 3 + 1) * 3 + 1], mesh->vertices[(i * 3 + 1) * 3 + 2] };
+			v3 = { mesh->vertices[(i * 3 + 2) * 3 + 0], mesh->vertices[(i * 3 + 2) * 3 + 1], mesh->vertices[(i * 3 + 2) * 3 + 2] };
+		}
+
+		v1 = Vector3Transform(v1, model.transform);
+		v2 = Vector3Transform(v2, model.transform);
+		v3 = Vector3Transform(v3, model.transform);
+
+		Vector3 edge1 = Vector3Subtract(v2, v1);
+		Vector3 edge2 = Vector3Subtract(v3, v1);
+		Vector3 normal = Vector3Normalize(Vector3CrossProduct(edge1, edge2));
+
+		Vector3 worldCenter = Vector3Transform(center, model.transform);
+
+		if (Vector3DotProduct(normal, Vector3Subtract(worldCenter, v1)) > 0)
+			normal = Vector3Negate(normal);
+
+		if (Vector3DotProduct(Vector3Subtract(point, v1), normal) > 0.0001f)
+			return false;
+	}	
+	return true;
+}
+
 
 void Figure::render()
 {

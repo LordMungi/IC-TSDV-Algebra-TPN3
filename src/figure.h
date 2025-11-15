@@ -28,6 +28,7 @@ public:
 	void scale(Vector3 axis, float delta);
 
 	inline bool isColliding(Figure other) { return aabb.isColliding(other.aabb); };
+	bool isPointInside(Vector3 point);
 
 	void render();
 };
