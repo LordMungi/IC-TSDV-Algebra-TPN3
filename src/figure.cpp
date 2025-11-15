@@ -18,6 +18,7 @@ Figure::Figure(Model model)
 	size = { 1,1,1 };
 	getLocalCenter();
 	aabb.setAABB(model.meshes[0], position, rotation);
+	aabb.update(model.transform);
 }
 
 Figure::Figure(Model model, Vector3 position, Vector3 size)
@@ -28,6 +29,7 @@ Figure::Figure(Model model, Vector3 position, Vector3 size)
 	rotation = { 0,0,0 };
 	getLocalCenter();
 	aabb.setAABB(model.meshes[0], position, rotation);
+	aabb.update(model.transform);
 }
 
 void Figure::getLocalCenter()
@@ -58,6 +60,7 @@ void Figure::applyTransform()
 	Matrix negPivot = MatrixTranslate(-center.x, -center.y, -center.z);
 
 	model.transform = MatrixMultiply(MatrixMultiply(MatrixMultiply(pivot, MatrixMultiply(rotate, scale)), negPivot), translate);
+	aabb.update(model.transform);
 }
 
 void Figure::move(Vector3 direction, float delta)

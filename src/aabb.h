@@ -5,7 +5,8 @@ class AABB
 {
 private:
 
-	Vector3 position;
+	Vector3 localMin;
+	Vector3 localMax;
 
 	Vector3 min;
 	Vector3 max;
@@ -16,9 +17,7 @@ public:
 	AABB();
 
 	void setAABB(Mesh mesh, Vector3 meshPosition, Vector3 meshRotation);
-	void updateAABB(Matrix transform);
-
-	inline void setPosition(Vector3 position) { this->position = position; };
+	void update(Matrix transform);
 
 	bool isColliding(AABB other);
 

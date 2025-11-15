@@ -4,39 +4,40 @@
 
 AABB::AABB()
 {
-	position = { 0,0,0 };
+	localMin = { 0,0,0 };
+	localMax = { 0,0,0 };
 	min = { 0,0,0 };
 	max = { 0,0,0 };
 }
 
 void AABB::calculateSize(Mesh mesh)
 {
-	min = { _FMAX,  _FMAX,  _FMAX };
-	max = { -_FMAX, -_FMAX, -_FMAX };
+	localMin = { _FMAX,  _FMAX,  _FMAX };
+	localMax = { -_FMAX, -_FMAX, -_FMAX };
 	
 	for (int i = 0; i < mesh.vertexCount * 3; i += 3)
 	{
-		min = Vector3Min(min, { mesh.vertices[i], mesh.vertices[i + 1], mesh.vertices[i + 2] });
-		max = Vector3Max(max, { mesh.vertices[i], mesh.vertices[i + 1], mesh.vertices[i + 2] });
+		localMin = Vector3Min(localMin, { mesh.vertices[i], mesh.vertices[i + 1], mesh.vertices[i + 2] });
+		localMax = Vector3Max(localMax, { mesh.vertices[i], mesh.vertices[i + 1], mesh.vertices[i + 2] });
 	}
 }
 
-void AABB::updateAABB(Matrix transform)
+void AABB::update(Matrix transform)
 {
 	Vector3 corners[8] =
 	{
-		{min.x, min.y, min.z},
-		{max.x, min.y, min.z},
-		{min.x, max.y, min.z},
-		{min.x, min.y, max.z},
-		{max.x, max.y, max.z},
-		{min.x, max.y, max.z},
-		{max.x, min.y, max.z},
-		{max.x, max.y, min.z},
+		{localMin.x, localMin.y, localMin.z},
+		{localMax.x, localMin.y, localMin.z},
+		{localMin.x, localMax.y, localMin.z},
+		{localMin.x, localMin.y, localMax.z},
+		{localMax.x, localMax.y, localMax.z},
+		{localMin.x, localMax.y, localMax.z},
+		{localMax.x, localMin.y, localMax.z},
+		{localMax.x, localMax.y, localMin.z},
 	};
 
 	for (int i = 0; i < 8; i++)
-		Vector3Transform(corners[i], transform);
+		corners[i] = Vector3Transform(corners[i], transform);
 
 	min = corners[0];
 	max = corners[0];
@@ -50,7 +51,6 @@ void AABB::updateAABB(Matrix transform)
 
 void AABB::setAABB(Mesh mesh, Vector3 meshPosition, Vector3 meshRotation)
 {
-	position = meshPosition;
 	calculateSize(mesh);
 }
 
@@ -61,5 +61,5 @@ bool AABB::isColliding(AABB other)
 
 void AABB::render()
 {
-	DrawCubeWires(position, max.x, max.y, max.z, GRAY);
+	DrawCubeWires(Vector3Scale(Vector3Add(min, max), 0.5f), max.x - min.x, max.y - min.y, max.z - min.z, GRAY);
 }
