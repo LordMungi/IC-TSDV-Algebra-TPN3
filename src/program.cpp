@@ -70,30 +70,69 @@ namespace program
 		if (cursorMode)
 		{
 			if (IsKeyDown(KEY_W))
-				decahedron.move({ 0,0,-1 }, delta);
+			{
+				if (IsKeyDown(KEY_LEFT_SHIFT))
+					decahedron.rotate({ -1,0,0 }, delta);
+				else
+					decahedron.move({ 0,0,-1 }, delta);
+			}
 			if (IsKeyDown(KEY_A))
-				decahedron.move({ -1,0,0 }, delta);
+			{
+				if (IsKeyDown(KEY_LEFT_SHIFT))
+					decahedron.rotate({ 0,0,1 }, delta);
+				else
+					decahedron.move({ -1,0,0 }, delta);
+			}
 			if (IsKeyDown(KEY_S))
-				decahedron.move({ 0,0,1 }, delta);
+			{
+				if (IsKeyDown(KEY_LEFT_SHIFT))
+					decahedron.rotate({ 1,0,0 }, delta);
+				else
+					decahedron.move({ 0,0,1 }, delta);
+			}
 			if (IsKeyDown(KEY_D))
-				decahedron.move({ 1,0,0 }, delta);
+			{
+				if (IsKeyDown(KEY_LEFT_SHIFT))
+					decahedron.rotate({ 0,0,-1 }, delta);
+				else
+					decahedron.move({ 1,0,0 }, delta);
+			}
 			if (IsKeyDown(KEY_E))
-				decahedron.move({ 0,1,0 }, delta);
+			{
+				if (IsKeyDown(KEY_LEFT_SHIFT))
+					decahedron.rotate({ 0,1,0 }, delta);
+				else
+					decahedron.move({ 0,1,0 }, delta);
+			}
 			if (IsKeyDown(KEY_Q))
-				decahedron.move({ 0,-1,0}, delta);
+			{
+				if (IsKeyDown(KEY_LEFT_SHIFT))
+					decahedron.rotate({ 0,-1,0 }, delta);
+				else
+					decahedron.move({ 0,-1,0}, delta);
+			}
 
-			if (IsKeyDown(KEY_I))
-				decahedron.rotate({ -1,0,0 }, delta);
-			if (IsKeyDown(KEY_J))
-				decahedron.rotate({ 0,0,1 }, delta);
-			if (IsKeyDown(KEY_K))
-				decahedron.rotate({ 1,0,0 }, delta);
-			if (IsKeyDown(KEY_L))
-				decahedron.rotate({ 0,0,-1 }, delta);
-			if (IsKeyDown(KEY_U))
-				decahedron.rotate({ 0,1,0 }, delta);
-			if (IsKeyDown(KEY_O))
-				decahedron.rotate({ 0,-1,0 }, delta);
+			if (IsKeyDown(KEY_ONE))
+			{
+				if (IsKeyDown(KEY_LEFT_SHIFT))
+					decahedron.scale({ -1,0,0 }, delta);
+				else
+					decahedron.scale({ 1,0,0 }, delta);
+			}
+			if (IsKeyDown(KEY_TWO))
+			{
+				if (IsKeyDown(KEY_LEFT_SHIFT))
+					decahedron.scale({ 0,-1,0 }, delta);
+				else
+					decahedron.scale({ 0,1,0 }, delta);
+			}
+			if (IsKeyDown(KEY_THREE))
+			{
+				if (IsKeyDown(KEY_LEFT_SHIFT))
+					decahedron.scale({ 0,0,-1 }, delta);
+				else
+					decahedron.scale({ 0,0,1 }, delta);
+			}
 		}
 	}
 

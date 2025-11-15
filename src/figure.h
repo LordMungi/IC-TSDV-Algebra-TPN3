@@ -25,6 +25,7 @@ public:
 
 	void move(Vector3 direction, float delta);
 	void rotate(Vector3 angle, float delta);
+	void scale(Vector3 axis, float delta);
 
 	void render();
 };

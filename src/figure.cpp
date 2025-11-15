@@ -83,6 +83,18 @@ void Figure::rotate(Vector3 angle, float delta)
 	aabb.setAABB(model.meshes[0], position, rotation);
 }
 
+void Figure::scale(Vector3 axis, float delta)
+{
+	float speed = 2;
+
+	size.x += axis.x * delta * speed;
+	size.y += axis.y * delta * speed;
+	size.z += axis.z * delta * speed;
+
+	applyTransform();
+	aabb.setAABB(model.meshes[0], position, rotation);
+}
+
 
 void Figure::render()
 {
