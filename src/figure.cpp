@@ -46,7 +46,7 @@ void Figure::getLocalCenter()
 
 void Figure::applyTransform()
 {
-	Matrix translate = MatrixTranslate(position.x, position.y, position.z);
+	Matrix translate = MatrixTranslate(0, 0, 0);
 	Matrix rotX = MatrixRotateX(rotation.x * DEG2RAD);
 	Matrix rotY = MatrixRotateY(rotation.y * DEG2RAD);
 	Matrix rotZ = MatrixRotateZ(rotation.z * DEG2RAD);
@@ -69,7 +69,6 @@ void Figure::move(Vector3 direction, float delta)
 	position.z += direction.z * delta * speed;
 
 	aabb.setPosition(position);
-	applyTransform();
 }
 
 void Figure::rotate(Vector3 angle, float delta)
@@ -87,6 +86,6 @@ void Figure::rotate(Vector3 angle, float delta)
 
 void Figure::render()
 {
-	DrawModel(model, { 0,0,0 }, 1.0f, RED);
+	DrawModel(model, position, 1.0f, RED);
 	aabb.render();
 }
