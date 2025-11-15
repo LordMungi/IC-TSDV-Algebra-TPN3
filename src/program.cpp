@@ -52,22 +52,7 @@ namespace program
 
 		if (!cursorMode)
 			UpdateCamera(&camera, CAMERA_FREE);
-
-		if (IsKeyPressed(KEY_TAB))
-		{
-			if (cursorMode)
-			{
-				DisableCursor();
-				cursorMode = false;
-			}
-			else
-			{
-				EnableCursor();
-				cursorMode = true;
-			}
-		}
-
-		if (cursorMode)
+		else
 		{
 			if (IsKeyDown(KEY_W))
 			{
@@ -134,6 +119,21 @@ namespace program
 					decahedron.scale({ 0,0,1 }, delta);
 			}
 		}
+
+		if (IsKeyPressed(KEY_TAB))
+		{
+			if (cursorMode)
+			{
+				DisableCursor();
+				cursorMode = false;
+			}
+			else
+			{
+				EnableCursor();
+				cursorMode = true;
+			}
+		}
+
 	}
 
 	static void draw()

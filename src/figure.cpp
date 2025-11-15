@@ -46,7 +46,7 @@ void Figure::getLocalCenter()
 
 void Figure::applyTransform()
 {
-	Matrix translate = MatrixTranslate(0, 0, 0);
+	Matrix translate = MatrixTranslate(position.x, position.y, position.z);
 	Matrix rotX = MatrixRotateX(rotation.x * DEG2RAD);
 	Matrix rotY = MatrixRotateY(rotation.y * DEG2RAD);
 	Matrix rotZ = MatrixRotateZ(rotation.z * DEG2RAD);
@@ -57,7 +57,7 @@ void Figure::applyTransform()
 	Matrix pivot = MatrixTranslate(center.x, center.y, center.z);
 	Matrix negPivot = MatrixTranslate(-center.x, -center.y, -center.z);
 
-	model.transform = MatrixMultiply(translate, MatrixMultiply(MatrixMultiply(pivot, MatrixMultiply(rotate, scale)), negPivot));
+	model.transform = MatrixMultiply(MatrixMultiply(MatrixMultiply(pivot, MatrixMultiply(rotate, scale)), negPivot), translate);
 }
 
 void Figure::move(Vector3 direction, float delta)
@@ -68,19 +68,18 @@ void Figure::move(Vector3 direction, float delta)
 	position.y += direction.y * delta * speed;
 	position.z += direction.z * delta * speed;
 
-	aabb.setPosition(position);
+	applyTransform();
 }
 
 void Figure::rotate(Vector3 angle, float delta)
 {
-	float speed = 25;
+	float speed = 40;
 
 	rotation.x += angle.x * delta * speed;
 	rotation.y += angle.y * delta * speed;
 	rotation.z += angle.z * delta * speed;
 
 	applyTransform();
-	aabb.setAABB(model.meshes[0], position, rotation);
 }
 
 void Figure::scale(Vector3 axis, float delta)
@@ -92,12 +91,11 @@ void Figure::scale(Vector3 axis, float delta)
 	size.z += axis.z * delta * speed;
 
 	applyTransform();
-	aabb.setAABB(model.meshes[0], position, rotation);
 }
 
 
 void Figure::render()
 {
-	DrawModel(model, position, 1.0f, RED);
+	DrawModel(model, { 0,0,0 }, 1.0f, RED);
 	aabb.render();
 }
