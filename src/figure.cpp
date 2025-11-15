@@ -1,7 +1,5 @@
 #include "figure.h"
 
-#include <raymath.h>
-
 Figure::Figure()
 {
 	position = { 0,0,0 };

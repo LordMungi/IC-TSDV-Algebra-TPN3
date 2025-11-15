@@ -31,6 +31,7 @@ public:
 	bool isPointInside(Vector3 point);
 
 	inline Vector3 getAABBMin() { return aabb.getMin(); };
+	inline Vector3 getAABBMax() { return aabb.getMax(); };
 
 	void render();
 };

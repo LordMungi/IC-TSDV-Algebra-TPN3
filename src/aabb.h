@@ -1,5 +1,6 @@
 #pragma once
 #include <raylib.h>
+#include <raymath.h>
 
 class AABB
 {
@@ -22,6 +23,7 @@ public:
 	bool isColliding(AABB other);
 
 	inline Vector3 getMin() { return min; };
+	inline Vector3 getMax() { return max; };
 
 	void render();
 };

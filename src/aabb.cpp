@@ -1,6 +1,4 @@
 #include "aabb.h"
-#include <raymath.h>
-
 
 AABB::AABB()
 {
