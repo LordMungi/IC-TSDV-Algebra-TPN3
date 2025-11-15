@@ -16,20 +16,25 @@ Figure::Figure(Model model)
 	position = { 0,0,0 };
 	rotation = { 0,0,0 };
 	size = { 1,1,1 };
+
 	getLocalCenter();
-	aabb.setAABB(model.meshes[0], position, rotation);
+	aabb.setAABB(model.meshes[0]);
 	aabb.update(model.transform);
 }
 
-Figure::Figure(Model model, Vector3 position, Vector3 size)
+Figure::Figure(Model model, Vector3 position)
 {
 	this->model = model;
+
 	this->position = position;
-	this->size = size;
 	rotation = { 0,0,0 };
+	size = { 1,1,1 };
+
 	getLocalCenter();
-	aabb.setAABB(model.meshes[0], position, rotation);
+	aabb.setAABB(model.meshes[0]);
 	aabb.update(model.transform);
+
+	applyTransform();
 }
 
 void Figure::getLocalCenter()

@@ -49,7 +49,7 @@ void AABB::update(Matrix transform)
 	}
 }
 
-void AABB::setAABB(Mesh mesh, Vector3 meshPosition, Vector3 meshRotation)
+void AABB::setAABB(Mesh mesh)
 {
 	calculateSize(mesh);
 }

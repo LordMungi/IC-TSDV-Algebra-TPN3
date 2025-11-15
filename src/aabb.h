@@ -16,7 +16,7 @@ public:
 
 	AABB();
 
-	void setAABB(Mesh mesh, Vector3 meshPosition, Vector3 meshRotation);
+	void setAABB(Mesh mesh);
 	void update(Matrix transform);
 
 	bool isColliding(AABB other);

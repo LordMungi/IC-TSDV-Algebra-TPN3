@@ -21,7 +21,7 @@ public:
 
 	Figure();
 	Figure(Model model);
-	Figure(Model model, Vector3 position, Vector3 size);
+	Figure(Model model, Vector3 position);
 
 	void move(Vector3 direction, float delta);
 	void rotate(Vector3 angle, float delta);

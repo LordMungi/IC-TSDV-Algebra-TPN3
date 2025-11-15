@@ -13,10 +13,15 @@ namespace program
 	Camera3D camera;
 	Vector3 cubePosition = { 0, 0, 0 };
 
-	Figure cube;
-	Figure dodecahedron;
+	const int maxFigures = 6;
+
+	Figure figures[maxFigures];
+	Figure* selectedFigure;
 
 	bool cursorMode;
+
+	bool aabbCollision;
+	bool meshCollision;
 
 	void run()
 	{
@@ -40,9 +45,15 @@ namespace program
 		camera.up = { 0, 1, 0 };
 		camera.fovy = 45.0f;
 		camera.projection = CAMERA_PERSPECTIVE;
+		
+		figures[0] = Figure(LoadModel("resource/cube.obj"), { 0, 0, 0});
+		figures[1] = Figure(LoadModel("resource/decahedron.obj"), { 2, -1, 2 });
+		figures[2] = Figure(LoadModel("resource/dodecahedron.obj"), { -2, 0, 2 });
+		figures[3] = Figure(LoadModel("resource/icosahedron.obj"), { 2, 0, -2 });
+		figures[4] = Figure(LoadModel("resource/octahedron.obj"), { -2, 0, -2 });
+		figures[5] = Figure(LoadModel("resource/tetrahedron.obj"), { 0, 2, 0 });
 
-		cube = Figure(LoadModel("resource/cube.obj"));
-		dodecahedron = Figure(LoadModel("resource/dodecahedron.obj"));
+		selectedFigure = &figures[0];
 
 		DisableCursor();
 		cursorMode = false;
@@ -52,6 +63,9 @@ namespace program
 	{
 		float delta = GetFrameTime();
 
+		aabbCollision = false;
+		meshCollision = false;
+
 		if (!cursorMode)
 			UpdateCamera(&camera, CAMERA_FREE);
 		else
@@ -59,66 +73,66 @@ namespace program
 			if (IsKeyDown(KEY_W))
 			{
 				if (IsKeyDown(KEY_LEFT_SHIFT))
-					cube.rotate({ -1,0,0 }, delta);
+					selectedFigure->rotate({ -1,0,0 }, delta);
 				else
-					cube.move({ 0,0,-1 }, delta);
+					selectedFigure->move({ 0,0,-1 }, delta);
 			}
 			if (IsKeyDown(KEY_A))
 			{
 				if (IsKeyDown(KEY_LEFT_SHIFT))
-					cube.rotate({ 0,0,1 }, delta);
+					selectedFigure->rotate({ 0,0,1 }, delta);
 				else
-					cube.move({ -1,0,0 }, delta);
+					selectedFigure->move({ -1,0,0 }, delta);
 			}
 			if (IsKeyDown(KEY_S))
 			{
 				if (IsKeyDown(KEY_LEFT_SHIFT))
-					cube.rotate({ 1,0,0 }, delta);
+					selectedFigure->rotate({ 1,0,0 }, delta);
 				else
-					cube.move({ 0,0,1 }, delta);
+					selectedFigure->move({ 0,0,1 }, delta);
 			}
 			if (IsKeyDown(KEY_D))
 			{
 				if (IsKeyDown(KEY_LEFT_SHIFT))
-					cube.rotate({ 0,0,-1 }, delta);
+					selectedFigure->rotate({ 0,0,-1 }, delta);
 				else
-					cube.move({ 1,0,0 }, delta);
+					selectedFigure->move({ 1,0,0 }, delta);
 			}
 			if (IsKeyDown(KEY_E))
 			{
 				if (IsKeyDown(KEY_LEFT_SHIFT))
-					cube.rotate({ 0,1,0 }, delta);
+					selectedFigure->rotate({ 0,1,0 }, delta);
 				else
-					cube.move({ 0,1,0 }, delta);
+					selectedFigure->move({ 0,1,0 }, delta);
 			}
 			if (IsKeyDown(KEY_Q))
 			{
 				if (IsKeyDown(KEY_LEFT_SHIFT))
-					cube.rotate({ 0,-1,0 }, delta);
+					selectedFigure->rotate({ 0,-1,0 }, delta);
 				else
-					cube.move({ 0,-1,0}, delta);
+					selectedFigure->move({ 0,-1,0}, delta);
 			}
 
 			if (IsKeyDown(KEY_ONE))
 			{
 				if (IsKeyDown(KEY_LEFT_SHIFT))
-					cube.scale({ -1,0,0 }, delta);
+					selectedFigure->scale({ -1,0,0 }, delta);
 				else
-					cube.scale({ 1,0,0 }, delta);
+					selectedFigure->scale({ 1,0,0 }, delta);
 			}
 			if (IsKeyDown(KEY_TWO))
 			{
 				if (IsKeyDown(KEY_LEFT_SHIFT))
-					cube.scale({ 0,-1,0 }, delta);
+					selectedFigure->scale({ 0,-1,0 }, delta);
 				else
-					cube.scale({ 0,1,0 }, delta);
+					selectedFigure->scale({ 0,1,0 }, delta);
 			}
 			if (IsKeyDown(KEY_THREE))
 			{
 				if (IsKeyDown(KEY_LEFT_SHIFT))
-					cube.scale({ 0,0,-1 }, delta);
+					selectedFigure->scale({ 0,0,-1 }, delta);
 				else
-					cube.scale({ 0,0,1 }, delta);
+					selectedFigure->scale({ 0,0,1 }, delta);
 			}
 		}
 
@@ -136,7 +150,6 @@ namespace program
 			}
 		}
 
-
 	}
 
 	static void draw()
@@ -147,13 +160,14 @@ namespace program
 		
 		BeginMode3D(camera);
 
-		cube.render();
-		dodecahedron.render();
+		for (int i = 0; i < maxFigures; i++)
+			figures[i].render();
+
 		DrawGrid(10, 1);
 
 		EndMode3D();
 
-		if (cube.isColliding(dodecahedron))
+		if (aabbCollision)
 			DrawText("AABB Collision", 20, 50, 20, ORANGE);
 		
 		EndDrawing();
