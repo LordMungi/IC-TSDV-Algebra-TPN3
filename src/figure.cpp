@@ -154,6 +154,6 @@ void Figure::render()
 	if (isSelected)
 		DrawModel(model, { 0,0,0 }, 1.0f, RED);
 	else
-		DrawModel(model, { 0,0,0 }, 1.0f, GRAY);
+		DrawModel(model, { 0,0,0 }, 1.0f, LIGHTGRAY);
 	aabb.render();
 }

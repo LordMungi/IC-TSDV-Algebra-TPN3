@@ -232,6 +232,7 @@ namespace program
 		float fontSize = 20;
 		float separation = 5;
 		Vector2 position = { 20, 30 };
+		float posX2 = 100;
 
 		if (movementMode)
 			DrawText("MOVEMENT MODE", position.x, position.y, fontSize, MAGENTA);
@@ -252,34 +253,50 @@ namespace program
 		
 		position.y += fontSize + separation * 2;
 
-		DrawText("TAB to change Mode", position.x, position.y, fontSize, DARKGRAY);
+		Color textColor = DARKGRAY;
+		Color textColor2 = GRAY;
+
+		DrawText("TAB to change Mode", position.x, position.y, fontSize, textColor);
 		position.y += fontSize + separation * 2;
 
 		if (movementMode)
 		{
 			DrawText("Movement mode:", position.x, position.y, fontSize, MAGENTA);
 			position.y += fontSize + separation;
-			DrawText("WASD - Move", position.x, position.y, fontSize, DARKGRAY);
+			DrawText("WASD", position.x, position.y, fontSize, textColor);
+			DrawText("Move", posX2, position.y, fontSize, textColor2);
 			position.y += fontSize + separation;
-			DrawText("Q/E - Up/Down", position.x, position.y, fontSize, DARKGRAY);
+			DrawText("Q/E", position.x, position.y, fontSize, textColor);
+			DrawText("Up/Down", posX2, position.y, fontSize, textColor2);
 			position.y += fontSize + separation;
-			DrawText("1/2/3 - Enlarge X/Y/Z", position.x, position.y, fontSize, DARKGRAY);
+			DrawText("1/2/3", position.x, position.y, fontSize, textColor);
+			DrawText("Enlarge X/Y/Z", posX2, position.y, fontSize, textColor2);
 
+			posX2 = 180;
 			position.y += fontSize + separation * 2;
-			DrawText("Shift + WASD - Rotate", position.x, position.y, fontSize, DARKGRAY);
+			DrawText("Shift + WASD", position.x, position.y, fontSize, textColor);
+			DrawText("Rotate", posX2, position.y, fontSize, textColor2);
 			position.y += fontSize + separation;
-			DrawText("Shift + 1/2/3 - Reduce X/Y/Z", position.x, position.y, fontSize, DARKGRAY);
+			DrawText("Shift + 1/2/3", position.x, position.y, fontSize, textColor);
+			DrawText("Reduce X/Y/Z", posX2, position.y, fontSize, textColor2);
 
+			posX2 = 100;
+			position.y += fontSize + separation * 2;
+			DrawText("Space", position.x, position.y, fontSize, textColor);
+			DrawText("Change figure", posX2, position.y, fontSize, textColor2);
 		}
 		else 
 		{
 			DrawText("Camera mode:", position.x, position.y, fontSize, BLUE);
 			position.y += fontSize + separation;
-			DrawText("WASD - Move", position.x, position.y, fontSize, DARKGRAY);
+			DrawText("WASD", position.x, position.y, fontSize, textColor);
+			DrawText("Move", posX2, position.y, fontSize, textColor2);
 			position.y += fontSize + separation;
-			DrawText("Ctrl - Down", position.x, position.y, fontSize, DARKGRAY);
+			DrawText("Space", position.x, position.y, fontSize, textColor);
+			DrawText("Up", posX2, position.y, fontSize, textColor2);
 			position.y += fontSize + separation;
-			DrawText("Space - Up", position.x, position.y, fontSize, DARKGRAY);
+			DrawText("Ctrl", position.x, position.y, fontSize, textColor);
+			DrawText("Down", posX2, position.y, fontSize, textColor2);
 		}
 
 
