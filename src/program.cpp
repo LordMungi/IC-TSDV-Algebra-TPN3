@@ -50,7 +50,7 @@ namespace program
 		camera.fovy = 45.0f;
 		camera.projection = CAMERA_PERSPECTIVE;
 		
-		figures[0] = Figure(LoadModel("resource/cube.obj"), { 0, 0, 0}, RED);
+		figures[0] = Figure(LoadModel("resource/cube.obj"), { 0, 0, 0}, BROWN);
 		figures[1] = Figure(LoadModel("resource/decahedron.obj"), { 2, -1, 2 }, BLUE);
 		figures[2] = Figure(LoadModel("resource/dodecahedron.obj"), { -2, 0, 2 }, GREEN);
 		figures[3] = Figure(LoadModel("resource/icosahedron.obj"), { 2, 0, -2 }, YELLOW);
@@ -58,6 +58,7 @@ namespace program
 		figures[5] = Figure(LoadModel("resource/tetrahedron.obj"), { 0, 2, 0 }, BLACK);
 
 		selectedFigure = &figures[0];
+		selectedFigure->setSelected(true);
 
 		DisableCursor();
 		cursorMode = false;
@@ -137,6 +138,14 @@ namespace program
 					selectedFigure->scale({ 0,0,-1 }, delta);
 				else
 					selectedFigure->scale({ 0,0,1 }, delta);
+			}
+			if (IsKeyPressed(KEY_SPACE))
+			{
+				selectedFigure->setSelected(false);
+				selectedFigure = selectedFigure++;
+				if (selectedFigure == &figures[maxFigures])
+					selectedFigure = &figures[0];
+				selectedFigure->setSelected(true);
 			}
 		}
 
@@ -227,6 +236,8 @@ namespace program
 			else
 				DrawText("AABB Collision", 20, 50, 20, ORANGE);
 		}
+		else 
+			DrawText("No Collision", 20, 50, 20, GRAY);
 		
 		EndDrawing();
 	}

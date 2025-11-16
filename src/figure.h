@@ -16,6 +16,8 @@ private:
 
 	Color color;
 
+	bool isSelected;
+
 	void applyTransform();
 	void getLocalCenter();
 
@@ -34,6 +36,8 @@ public:
 
 	inline Vector3 getAABBMin() { return aabb.getMin(); };
 	inline Vector3 getAABBMax() { return aabb.getMax(); };
+
+	inline void setSelected(bool isSelected) { this->isSelected = isSelected; };
 
 	void render();
 };
