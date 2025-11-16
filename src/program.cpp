@@ -22,7 +22,7 @@ namespace program
 	Vector3 intersectionMin;
 	Vector3 intersectionMax;
 
-	bool cursorMode;
+	bool movementMode;
 
 	bool aabbCollision;
 	bool meshCollision;
@@ -44,7 +44,7 @@ namespace program
 	{
 		InitWindow(1024, 768, "Ejemplo");
 
-		camera.position = { 0, 10, 10 };
+		camera.position = { 0, 5, 7 };
 		camera.target = { 0, 0, 0 };
 		camera.up = { 0, 1, 0 };
 		camera.fovy = 45.0f;
@@ -61,7 +61,7 @@ namespace program
 		selectedFigure->setSelected(true);
 
 		DisableCursor();
-		cursorMode = false;
+		movementMode = false;
 	}
 
 	static void update()
@@ -71,7 +71,7 @@ namespace program
 		aabbCollision = false;
 		meshCollision = false;
 
-		if (!cursorMode)
+		if (!movementMode)
 			UpdateCamera(&camera, CAMERA_FREE);
 		else
 		{
@@ -151,15 +151,15 @@ namespace program
 
 		if (IsKeyPressed(KEY_TAB))
 		{
-			if (cursorMode)
+			if (movementMode)
 			{
 				DisableCursor();
-				cursorMode = false;
+				movementMode = false;
 			}
 			else
 			{
 				EnableCursor();
-				cursorMode = true;
+				movementMode = true;
 			}
 		}
 
@@ -229,16 +229,61 @@ namespace program
 
 		EndMode3D();
 
+		float fontSize = 20;
+		float separation = 5;
+		Vector2 position = { 20, 30 };
+
+		if (movementMode)
+			DrawText("MOVEMENT MODE", position.x, position.y, fontSize, MAGENTA);
+		else
+			DrawText("CAMERA MODE", position.x, position.y, fontSize, BLUE);
+
+		position.y += fontSize + separation;
+
 		if (aabbCollision)
 		{
 			if (meshCollision)
-				DrawText("Mesh Collision", 20, 50, 20, RED);
+				DrawText("MESH COLLISION", position.x, position.y, fontSize, RED);
 			else
-				DrawText("AABB Collision", 20, 50, 20, ORANGE);
+				DrawText("AABB COLLISION", position.x, position.y, fontSize, ORANGE);
 		}
 		else 
-			DrawText("No Collision", 20, 50, 20, GRAY);
+			DrawText("NO COLLISION", position.x, position.y, fontSize, GRAY);
 		
+		position.y += fontSize + separation * 2;
+
+		DrawText("TAB to change Mode", position.x, position.y, fontSize, DARKGRAY);
+		position.y += fontSize + separation * 2;
+
+		if (movementMode)
+		{
+			DrawText("Movement mode:", position.x, position.y, fontSize, MAGENTA);
+			position.y += fontSize + separation;
+			DrawText("WASD - Move", position.x, position.y, fontSize, DARKGRAY);
+			position.y += fontSize + separation;
+			DrawText("Q/E - Up/Down", position.x, position.y, fontSize, DARKGRAY);
+			position.y += fontSize + separation;
+			DrawText("1/2/3 - Enlarge X/Y/Z", position.x, position.y, fontSize, DARKGRAY);
+
+			position.y += fontSize + separation * 2;
+			DrawText("Shift + WASD - Rotate", position.x, position.y, fontSize, DARKGRAY);
+			position.y += fontSize + separation;
+			DrawText("Shift + 1/2/3 - Reduce X/Y/Z", position.x, position.y, fontSize, DARKGRAY);
+
+		}
+		else 
+		{
+			DrawText("Camera mode:", position.x, position.y, fontSize, BLUE);
+			position.y += fontSize + separation;
+			DrawText("WASD - Move", position.x, position.y, fontSize, DARKGRAY);
+			position.y += fontSize + separation;
+			DrawText("Ctrl - Down", position.x, position.y, fontSize, DARKGRAY);
+			position.y += fontSize + separation;
+			DrawText("Space - Up", position.x, position.y, fontSize, DARKGRAY);
+		}
+
+
+
 		EndDrawing();
 	}
 
